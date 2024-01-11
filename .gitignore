@@ -40,3 +40,6 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+/src/assets/index-cut-pull/
+/src/assets/index-cycle-pull/
+/src/assets/index-real-pull/

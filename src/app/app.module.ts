@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AppRoutingModule } from './app-routing.module';
+import {appRoutes} from './app-routing.module';
 import { AppComponent } from './app.component';
 import {CustomDateAdapter, UserFormComponent} from './user-form/user-form.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -14,15 +14,28 @@ import * as moment from 'moment';
 import {MatMomentDateModule} from "@angular/material-moment-adapter";
 import {MatSelectModule} from "@angular/material/select";
 import {MatDividerModule} from "@angular/material/divider";
+import {HttpClientModule} from "@angular/common/http";
+import { QuestionaireComponent } from './questionaire/questionaire.component';
+import {ExtraOptions, PreloadAllModules, RouterModule} from "@angular/router";
+import {MatIconModule} from "@angular/material/icon";
+import {MatLegacyChipsModule} from "@angular/material/legacy-chips";
+
+const routerConfig: ExtraOptions = {
+  preloadingStrategy       : PreloadAllModules,
+  scrollPositionRestoration: 'enabled',
+  useHash: true
+};
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    UserFormComponent
+    UserFormComponent,
+    QuestionaireComponent
   ],
   imports: [
+    RouterModule.forRoot(appRoutes, routerConfig),
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
     MatInputModule,
     MatCardModule,
@@ -31,7 +44,10 @@ import {MatDividerModule} from "@angular/material/divider";
     MatDatepickerModule,
     MatMomentDateModule,
     MatSelectModule,
-    MatDividerModule
+    MatDividerModule,
+    HttpClientModule,
+    MatIconModule,
+    MatLegacyChipsModule
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'ru' },

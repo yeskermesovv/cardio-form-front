@@ -27,7 +27,7 @@
       Дата рождения
     </label>
     <mat-form-field appearance="outline" class="w-full">
-      <input matInput [matDatepicker]="picker" class="placeholder-font-size" placeholder="Укажите дату рождения">
+      <input matInput [matDatepicker]="picker" formControlName="birthDate"  class="placeholder-font-size" placeholder="Укажите дату рождения">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
@@ -49,7 +49,7 @@
       Введите ваш опыт работы в годах в сфере кардиологии (УЗИ, кардиохирургия (детская, взрослая), кардиодиагностика, и т. д.):
     </label>
     <mat-form-field appearance="outline" class="w-full">
-      <input matInput placeholder="" formControlName="fio">
+      <input matInput placeholder="" formControlName="jobExperience">
     </mat-form-field>
   </div>
 
@@ -58,7 +58,7 @@
       Введите сколько лет прошло после окончания медицинского ВУЗа:
     </label>
     <mat-form-field appearance="outline" class="w-full">
-      <input matInput placeholder="4" formControlName="fio">
+      <input matInput placeholder="4" formControlName="passedYearsSinceGraduation">
     </mat-form-field>
   </div>
 
@@ -67,13 +67,13 @@
       Введите сколько эхокардиограмм вы анализируйте за неделю, в среднем в штуках (например: 20):
     </label>
     <mat-form-field appearance="outline" class="w-full">
-      <input matInput placeholder="20" formControlName="fio">
+      <input matInput placeholder="20" formControlName="weeklyEchocardiogramCount">
     </mat-form-field>
   </div>
 
 
   <div class="flex justify-center items-center">
-    <button
+    <button (click)="onSubmit()"
       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded focus:outline-none focus:shadow-outline">
       <span class="text-base">Сохранить</span>
     </button>

@@ -1,0 +1,86 @@
+<form class="my-8 p-8 max-w-fit mx-auto bg-white rounded-lg shadow-md overflow-scroll max-h-full" [formGroup]="questionnaireForm">
+  <h1 class="font-bold text-gray-800">Опросник</h1>
+
+  <mat-divider></mat-divider>
+
+  <div class="mt-8 mb-2">
+    <div *ngFor="let item of questions.controls; let i = index"
+      class="mb-4 flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100">
+      <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"
+           src="\assets\{{item.value['fileName']}}" alt="">
+      <div class="flex flex-col justify-between p-4 leading-normal">
+        <p class="mb-2 text-base font-medium tracking-tight text-gray-900 ">Оцените качество снимка #{{i + 1}}</p>
+
+        <!--   Stars     -->
+        <div class="flex items-center">
+          <svg (click)="onRate(item?.controls['mark'], 1)" [ngClass]="item.value['mark'] >= 1 ? 'text-yellow-300' : 'text-gray-300'" class="w-6 h-6 me-1 hover:cursor-pointer" aria-hidden="true"
+               xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+            <path
+              d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+          </svg>
+          <svg (click)="onRate(item?.controls['mark'], 2)" [ngClass]="item.value['mark'] >= 2 ? 'text-yellow-300' : 'text-gray-300'" class="w-6 h-6 me-1" aria-hidden="true"
+               xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+            <path
+              d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+          </svg>
+          <svg (click)="onRate(item?.controls['mark'], 3)" [ngClass]="item.value['mark'] >= 3 ? 'text-yellow-300' : 'text-gray-300'" class="w-6 h-6 me-1" aria-hidden="true"
+               xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+            <path
+              d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+          </svg>
+          <svg (click)="onRate(item?.controls['mark'], 4)" [ngClass]="item.value['mark'] >= 4 ? 'text-yellow-300' : 'text-gray-300'" class="w-6 h-6 me-1" aria-hidden="true"
+               xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+            <path
+              d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+          </svg>
+          <svg (click)="onRate(item?.controls['mark'], 5)" [ngClass]="item.value['mark'] == 5 ? 'text-yellow-300' : 'text-gray-300'" class="w-6 h-6 me-1" aria-hidden="true"
+               xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+            <path
+              d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+          </svg>
+        </div>
+
+        <!--   Tags     -->
+<!--        <mat-form-field class="mt-2">-->
+<!--          <mat-label>Toppings</mat-label>-->
+<!--          <mat-select multiple>-->
+<!--            <mat-select-trigger>-->
+<!--              <mat-chip-list>-->
+<!--                <mat-chip *ngFor="let topping of item?.controls['tags'].value"-->
+<!--                          [removable]="true" (removed)="onToppingRemoved(topping)">-->
+<!--                  {{ topping }}-->
+<!--                  <mat-icon matChipRemove>cancel</mat-icon>-->
+<!--                </mat-chip>-->
+<!--              </mat-chip-list>-->
+<!--            </mat-select-trigger>-->
+
+<!--            <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>-->
+
+<!--          </mat-select>-->
+<!--        </mat-form-field>-->
+
+        <mat-form-field class="mt-2">
+          <mat-label>Toppings</mat-label>
+          <mat-select multiple>
+            <mat-select-trigger>
+              <mat-chip-list>
+                <mat-chip *ngFor="let topping of item?.controls['tags'].value"
+                          [removable]="true" (removed)="onToppingRemoved(topping)">
+                  {{ topping }}
+                  <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip>
+              </mat-chip-list>
+            </mat-select-trigger>
+
+            <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+
+<!--        <p class="mb-3 font-normal text-gray-700 ">Here are the biggest enterprise technology acquisitions of 2021 so-->
+<!--          far, in reverse chronological order.</p>-->
+      </div>
+    </div>
+  </div>
+
+</form>

@@ -1,17 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {UserFormComponent} from "./user-form/user-form.component";
+import {QuestionaireComponent} from "./questionaire/questionaire.component";
 
-const routes: Routes = [
-  { path: 'questionnaire', component: UserFormComponent },
-  // Add more routes here
-  { path: '', redirectTo: '/questionnaire', pathMatch: 'full' }, // default route
+export const appRoutes: Routes = [
+  { path: 'form', component: UserFormComponent },
+  { path: 'questionnaire', component: QuestionaireComponent },
+  { path: '', redirectTo: '/form', pathMatch: 'full' }, // default route
 ];
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
-export class AppRoutingModule {
-
-}
