@@ -1,0 +1,81 @@
+<form class="mt-8 p-8 max-w-lg mx-auto bg-white rounded-lg shadow-md" [formGroup]="userForm">
+  <h1 class="font-bold text-gray-800">Форма для кардиолога</h1>
+
+  <mat-divider></mat-divider>
+
+  <div class="mt-8 mb-2">
+    <label class="block text-gray-700 text-lg font-medium mb-2">
+      ФИО
+    </label>
+    <mat-form-field appearance="outline" class="w-full">
+      <input matInput placeholder="Укажите ФИО" formControlName="fio">
+    </mat-form-field>
+  </div>
+
+  <div class="mb-24 relative">
+    <label class="block text-gray-700 text-lg font-medium">
+      Пол
+    </label>
+    <mat-radio-group class="flex flex-col absolute -left-2" name="flavors" formControlName="gender">
+      <mat-radio-button value="male"><span class="text-base">Мужской</span></mat-radio-button>
+      <mat-radio-button value="female"><span class="text-base">Женский</span></mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div>
+    <label class="block text-gray-700 text-lg font-medium mb-2">
+      Дата рождения
+    </label>
+    <mat-form-field appearance="outline" class="w-full">
+      <input matInput [matDatepicker]="picker" class="placeholder-font-size" placeholder="Укажите дату рождения">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <label class="block text-gray-700 text-lg font-medium mb-2">
+      Квалификация
+    </label>
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-select formControlName="qualification">
+        <mat-option *ngFor="let option of qualificationList" [value]="option">{{ option }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="mb-2">
+    <label class="block text-gray-700 text-lg font-medium mb-2">
+      Введите ваш опыт работы в годах в сфере кардиологии (УЗИ, кардиохирургия (детская, взрослая), кардиодиагностика, и т. д.):
+    </label>
+    <mat-form-field appearance="outline" class="w-full">
+      <input matInput placeholder="" formControlName="fio">
+    </mat-form-field>
+  </div>
+
+  <div class="mb-2">
+    <label class="block text-gray-700 text-lg font-medium mb-2">
+      Введите сколько лет прошло после окончания медицинского ВУЗа:
+    </label>
+    <mat-form-field appearance="outline" class="w-full">
+      <input matInput placeholder="4" formControlName="fio">
+    </mat-form-field>
+  </div>
+
+  <div class="mb-2">
+    <label class="block text-gray-700 text-lg font-medium mb-2">
+      Введите сколько эхокардиограмм вы анализируйте за неделю, в среднем в штуках (например: 20):
+    </label>
+    <mat-form-field appearance="outline" class="w-full">
+      <input matInput placeholder="20" formControlName="fio">
+    </mat-form-field>
+  </div>
+
+
+  <div class="flex justify-center items-center">
+    <button
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded focus:outline-none focus:shadow-outline">
+      <span class="text-base">Сохранить</span>
+    </button>
+  </div>
+</form>
