@@ -12,6 +12,7 @@ export class QuestionaireComponent {
   randomCutImageNames: string[] = [];
   randomCycleImageNames: string[] = [];
   randomRealImageNames: string[] = [];
+  imageTags: Tag[] = [];
 
   questionnaireForm = this.fb.group({
     questions: this.fb.array([])
@@ -81,22 +82,6 @@ export class QuestionaireComponent {
     console.log("itemm", item)
     item.setValue(rating);
   }
-
-  // imageTags: Tag[] = ['Плохое качество изображения', 'Нечеткие линии', 'Искажение сигнала'];
-  imageTags: Tag[] = [
-    {
-      id: 1,
-      name: 'Плохое качество изображения'
-    },
-    {
-      id: 2,
-      name: 'Нечеткие линии'
-    },
-    {
-      id: 3,
-      name: 'Искажение сигнала'
-    },
-  ];
 
   getEpoch(fileName): string {
     let parts = fileName.split('_'); // Split the string by underscores

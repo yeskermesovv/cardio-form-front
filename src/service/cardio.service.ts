@@ -18,4 +18,8 @@ export class CardioService {
   saveForm(form): Observable<any> {
     return this._httpClient.post(`${CardioService.CARDIO}/api/questions`, form);
   }
+
+  getTags(): Observable<any> {
+    return this._httpClient.get(`${CardioService.CARDIO}/api/tags`);
+  }
 }
