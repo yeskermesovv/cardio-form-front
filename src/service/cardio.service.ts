@@ -14,4 +14,8 @@ export class CardioService {
   saveDoctor(doctorForm): Observable<any> {
     return this._httpClient.post(`${CardioService.CARDIO}/api/users`, doctorForm);
   }
+
+  saveForm(form): Observable<any> {
+    return this._httpClient.post(`${CardioService.CARDIO}/api/questions`, form);
+  }
 }

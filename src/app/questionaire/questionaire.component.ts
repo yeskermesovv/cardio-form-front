@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import {AbstractControl, FormArray, FormBuilder, UntypedFormBuilder} from "@angular/forms";
+import {Component} from '@angular/core';
+import {AbstractControl, FormArray, FormBuilder, FormControl, UntypedFormBuilder} from "@angular/forms";
 import {cutImageList, cycleImageList, realImageList} from "./constant";
+import {CardioService} from "../../service/cardio.service";
 
 @Component({
   selector: 'app-questionaire',
@@ -16,7 +17,8 @@ export class QuestionaireComponent {
     questions: this.fb.array([])
   });
 
-  constructor(private fb: UntypedFormBuilder) {
+  constructor(private fb: UntypedFormBuilder,
+              private cardioService: CardioService) {
     this.randomCutImageNames = this.getRandomImages(cutImageList, 30);
     this.randomCycleImageNames = this.getRandomImages(cycleImageList, 30);
     this.randomRealImageNames = this.getRandomImages(realImageList, 30);
@@ -28,32 +30,45 @@ export class QuestionaireComponent {
   addQuestions(count: number) {
     for (let i = 0; i < count; i++) {
       let randomImageName = '';
+      let doctorId = JSON.parse(localStorage.getItem("user")).id;
+      let imageId = '';
+      let imageType = '';
+      let epoch = '';
+
       if (i < 10) {
         randomImageName = 'index-cut-pull\\' + this.randomCutImageNames[i];
+        imageId = this.randomCutImageNames[i].substring(0, 3);
+        imageType = 'cut'
+        epoch = this.getEpoch(this.randomCutImageNames[i]);
       } else if (i < 20) {
         randomImageName = 'index-cycle-pull\\' + this.randomCycleImageNames[i];
+        imageId = this.randomCycleImageNames[i].substring(0, 3);
+        imageType = 'cycle'
+        epoch = this.getEpoch(this.randomCycleImageNames[i]);
       } else if (i < 30) {
         randomImageName = 'index-real-pull\\' + this.randomRealImageNames[i];
+        imageId = this.randomRealImageNames[i].substring(0, 3);
+        imageType = 'real'
       }
 
+
       this.questions.push(this.fb.group({
-        id: i + 1,
         mark: '',
-        doctorId: '',
-        tags: '',
+        doctorId: doctorId,
+        tags: new FormControl([]),
         fileName: randomImageName,
-        imageId: '',
-        epoch: '',
-        imageType: ''
+        imageId: imageId,
+        epoch: epoch,
+        imageType: imageType
       }));
     }
   }
 
   getRandomImages(images: string[], count: number): string[] {
     let shuffled = images
-      .map(value => ({ value, sort: Math.random() }))
+      .map(value => ({value, sort: Math.random()}))
       .sort((a, b) => a.sort - b.sort)
-      .map(({ value }) => value)
+      .map(({value}) => value)
 
     return shuffled.slice(0, count);
   }
@@ -67,28 +82,37 @@ export class QuestionaireComponent {
     item.setValue(rating);
   }
 
-  toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
+  // imageTags: Tag[] = ['Плохое качество изображения', 'Нечеткие линии', 'Искажение сигнала'];
+  imageTags: Tag[] = [
+    {
+      id: 1,
+      name: 'Плохое качество изображения'
+    },
+    {
+      id: 2,
+      name: 'Нечеткие линии'
+    },
+    {
+      id: 3,
+      name: 'Искажение сигнала'
+    },
+  ];
 
-  // onToppingRemoved(topping: string) {
-  //   const toppings = this.questions.controls['tags'].value as string[];
-  //   this.removeFirst(toppings, topping);
-  //   this.questions.controls['tags'].setValue(toppings); // To trigger change detection
-  // }
-
-  tags: string[] = []; // Замените на актуальное имя свойства
-
-  onToppingRemoved(topping: string) {
-    const index = this.tags.indexOf(topping);
-    if (index !== -1) {
-      this.tags.splice(index, 1);
-    }
-    console.log("Выбранные элементы:", this.tags);
+  getEpoch(fileName): string {
+    let parts = fileName.split('_'); // Split the string by underscores
+    let lastPart = parts[parts.length - 1]; // Get the last part of the split string
+    return lastPart.split('.')[0]; // Split by '.' and take the first part to remove '.jpg'
   }
 
-  private removeFirst<T>(array: T[], toRemove: T): void {
-    const index = array.indexOf(toRemove);
-    if (index !== -1) {
-      array.splice(index, 1);
-    }
+  onSubmit() {
+    this.cardioService.saveForm(this.questionnaireForm.value).subscribe(res => {
+      console.log('res', res)
+    });
+    console.log('formValuee', this.questionnaireForm.value)
   }
+}
+
+interface Tag {
+  id: number,
+  name: string
 }

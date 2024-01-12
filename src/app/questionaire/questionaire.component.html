@@ -1,9 +1,9 @@
 <form class="my-8 p-8 max-w-fit mx-auto bg-white rounded-lg shadow-md overflow-scroll max-h-full" [formGroup]="questionnaireForm">
-  <h1 class="font-bold text-gray-800">Опросник</h1>
+  <h1 class="font-bold text-gray-800">Пройдите опрос</h1>
 
   <mat-divider></mat-divider>
 
-  <div class="mt-8 mb-2">
+  <div class="mt-8 mb-2 grid grid-cols-2 gap-3" >
     <div *ngFor="let item of questions.controls; let i = index"
       class="mb-4 flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100">
       <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"
@@ -41,40 +41,21 @@
         </div>
 
         <!--   Tags     -->
-<!--        <mat-form-field class="mt-2">-->
-<!--          <mat-label>Toppings</mat-label>-->
-<!--          <mat-select multiple>-->
-<!--            <mat-select-trigger>-->
-<!--              <mat-chip-list>-->
-<!--                <mat-chip *ngFor="let topping of item?.controls['tags'].value"-->
-<!--                          [removable]="true" (removed)="onToppingRemoved(topping)">-->
-<!--                  {{ topping }}-->
-<!--                  <mat-icon matChipRemove>cancel</mat-icon>-->
-<!--                </mat-chip>-->
-<!--              </mat-chip-list>-->
-<!--            </mat-select-trigger>-->
 
-<!--            <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>-->
-
-<!--          </mat-select>-->
-<!--        </mat-form-field>-->
-
-        <mat-form-field class="mt-2">
-          <mat-label>Toppings</mat-label>
-          <mat-select multiple>
+        <mat-form-field class="w-full mt-6" >
+          <mat-label>Тэги</mat-label>
+          <mat-select [formControl]="item?.controls['tags']" multiple>
             <mat-select-trigger>
-              <mat-chip-list>
-                <mat-chip *ngFor="let topping of item?.controls['tags'].value"
-                          [removable]="true" (removed)="onToppingRemoved(topping)">
-                  {{ topping }}
-                  <mat-icon matChipRemove>cancel</mat-icon>
-                </mat-chip>
-              </mat-chip-list>
+              {{item?.controls['tags'].value?.[0]?.name || ''}}
+              <span *ngIf="(item?.controls['tags'].value?.length || 0) > 1" class="example-additional-selection">
+        (+{{(item?.controls['tags'].value?.length || 0) - 1}} {{item?.controls['tags'].value?.length === 2 ? 'другой' : 'другие'}})
+      </span>
             </mat-select-trigger>
-
-            <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+            <mat-option *ngFor="let topping of imageTags" [value]="topping">{{topping.name}}</mat-option>
           </mat-select>
         </mat-form-field>
+
+
 
 
 <!--        <p class="mb-3 font-normal text-gray-700 ">Here are the biggest enterprise technology acquisitions of 2021 so-->
@@ -82,5 +63,10 @@
       </div>
     </div>
   </div>
-
+  <div class="flex justify-center items-center">
+    <button (click)="onSubmit()"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded focus:outline-none focus:shadow-outline">
+      <span class="text-base">Сохранить</span>
+    </button>
+  </div>
 </form>
