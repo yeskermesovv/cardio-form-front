@@ -1,14 +1,15 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormControl, UntypedFormBuilder} from "@angular/forms";
 import {cutImageList, cycleImageList, realImageList} from "./constant";
 import {CardioService} from "../../service/cardio.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-questionaire',
   templateUrl: './questionaire.component.html',
   styleUrls: ['./questionaire.component.scss']
 })
-export class QuestionaireComponent {
+export class QuestionaireComponent implements OnInit{
   randomCutImageNames: string[] = [];
   randomCycleImageNames: string[] = [];
   randomRealImageNames: string[] = [];
@@ -19,13 +20,20 @@ export class QuestionaireComponent {
   });
 
   constructor(private fb: UntypedFormBuilder,
-              private cardioService: CardioService) {
+              private cardioService: CardioService,
+              private router: Router) {
     this.randomCutImageNames = this.getRandomImages(cutImageList, 30);
     this.randomCycleImageNames = this.getRandomImages(cycleImageList, 30);
     this.randomRealImageNames = this.getRandomImages(realImageList, 30);
 
     console.log('sizee', this.randomCutImageNames)
     this.addQuestions(30); // Create 30 questions
+  }
+
+  ngOnInit() {
+    this.cardioService.getTags().subscribe(res => {
+      this.imageTags = res;
+    })
   }
 
   addQuestions(count: number) {
@@ -91,7 +99,8 @@ export class QuestionaireComponent {
 
   onSubmit() {
     this.cardioService.saveForm(this.questionnaireForm.value).subscribe(res => {
-      console.log('res', res)
+      console.log('res', res);
+      this.router.navigate(['thanks']);
     });
     console.log('formValuee', this.questionnaireForm.value)
   }

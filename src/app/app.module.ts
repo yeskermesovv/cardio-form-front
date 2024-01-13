@@ -19,6 +19,7 @@ import { QuestionaireComponent } from './questionaire/questionaire.component';
 import {ExtraOptions, PreloadAllModules, RouterModule} from "@angular/router";
 import {MatIconModule} from "@angular/material/icon";
 import {MatLegacyChipsModule} from "@angular/material/legacy-chips";
+import { ThanksComponent } from './thanks/thanks.component';
 
 const routerConfig: ExtraOptions = {
   preloadingStrategy       : PreloadAllModules,
@@ -31,7 +32,8 @@ const routerConfig: ExtraOptions = {
   declarations: [
     AppComponent,
     UserFormComponent,
-    QuestionaireComponent
+    QuestionaireComponent,
+    ThanksComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes, routerConfig),
