@@ -9,15 +9,17 @@ import {Router} from "@angular/router";
   templateUrl: './questionaire.component.html',
   styleUrls: ['./questionaire.component.scss']
 })
-export class QuestionaireComponent implements OnInit{
+export class QuestionaireComponent implements OnInit {
   randomCutImageNames: string[] = [];
   randomCycleImageNames: string[] = [];
   randomRealImageNames: string[] = [];
   imageTags: Tag[] = [];
+  questionArray = []; // store questionFormGroup objects
 
   questionnaireForm = this.fb.group({
     questions: this.fb.array([])
   });
+  test = false;
 
   constructor(private fb: UntypedFormBuilder,
               private cardioService: CardioService,
@@ -31,6 +33,11 @@ export class QuestionaireComponent implements OnInit{
   }
 
   ngOnInit() {
+    let test = localStorage.getItem("test");
+    if (test) {
+      this.test = Boolean(test);
+    }
+
     this.cardioService.getTags().subscribe(res => {
       this.imageTags = res;
     })
@@ -60,8 +67,7 @@ export class QuestionaireComponent implements OnInit{
         imageType = 'real'
       }
 
-
-      this.questions.push(this.fb.group({
+      const questionFormGroup = this.fb.group({
         mark: '',
         doctorId: doctorId,
         tags: new FormControl([]),
@@ -69,8 +75,21 @@ export class QuestionaireComponent implements OnInit{
         imageId: imageId,
         epoch: epoch,
         imageType: imageType
-      }));
+      });
+
+      this.questionArray.push(questionFormGroup); // Push the FormGroup to the array
     }
+
+    // Shuffle the questionArray using the Fisher-Yates Shuffle
+    for (let i = this.questionArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [this.questionArray[i], this.questionArray[j]] = [this.questionArray[j], this.questionArray[i]];
+    }
+
+    // push to form array
+    this.questionArray.forEach((questionFormGroup) => {
+      this.questions.push(questionFormGroup);
+    });
   }
 
   getRandomImages(images: string[], count: number): string[] {

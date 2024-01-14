@@ -10,6 +10,7 @@
            src="\assets\{{item.value['fileName']}}" alt="">
       <div class="flex flex-col justify-between p-4 leading-normal">
         <p class="mb-2 text-base font-medium tracking-tight text-gray-900 ">Оцените качество снимка #{{i + 1}}</p>
+        <p *ngIf="test">{{item.value['fileName']}}</p>
 
         <!--   Stars     -->
         <div class="flex items-center">
