@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormControl, UntypedFormBuilder} from "@angular/forms";
-import {cutImageList, cycleImageList, realImageList} from "./constant";
+import {cutImageList, cycleImageList, realImageList, stableDiffImageList} from "./constant";
 import {CardioService} from "../../service/cardio.service";
 import {Router} from "@angular/router";
 
@@ -13,6 +13,8 @@ export class QuestionaireComponent implements OnInit {
   randomCutImageNames: string[] = [];
   randomCycleImageNames: string[] = [];
   randomRealImageNames: string[] = [];
+  randomStableDiffImageNames: string[] = [];
+
   imageTags: Tag[] = [];
   questionArray = []; // store questionFormGroup objects
 
@@ -27,9 +29,10 @@ export class QuestionaireComponent implements OnInit {
     this.randomCutImageNames = this.getRandomImages(cutImageList, 30);
     this.randomCycleImageNames = this.getRandomImages(cycleImageList, 30);
     this.randomRealImageNames = this.getRandomImages(realImageList, 30);
+    this.randomStableDiffImageNames = this.getRandomImages(stableDiffImageList, 40);
 
     console.log('sizee', this.randomCutImageNames)
-    this.addQuestions(30); // Create 30 questions
+    this.addQuestions(40); // Create 40 questions
   }
 
   ngOnInit() {
@@ -65,6 +68,10 @@ export class QuestionaireComponent implements OnInit {
         randomImageName = 'index-real-pull\\' + this.randomRealImageNames[i];
         imageId = this.randomRealImageNames[i].substring(0, 3);
         imageType = 'real'
+      } else {
+        randomImageName = 'stable-diff\\' + this.randomStableDiffImageNames[i];
+        imageId = this.randomStableDiffImageNames[i];
+        imageType = 'stable-diff'
       }
 
       const questionFormGroup = this.fb.group({
